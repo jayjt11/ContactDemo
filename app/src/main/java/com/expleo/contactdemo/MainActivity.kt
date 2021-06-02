@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
@@ -22,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     var recyclerView: RecyclerView? = null
 
-    var listContacts = ArrayList<Contact>()
+    var listAllContacts = ArrayList<Contact>()
+    var listContact = ArrayList<Contact>()
     var adapter: ContactAdapter? = null
     var cursor: Cursor? = null
     var name: String? = null
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
         var allowed = sharedPreferences!!.getBoolean("allowed", false)
         if (allowed) {
-            getContactList()
+            getSingleContactList()
         } else {
             enableRuntimePermission()
         }
@@ -72,30 +74,91 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getContactList(){
+    fun getAllContactsList() : ArrayList<Contact> {
 
-        listContacts = ArrayList<Contact>()
-        cursor = contentResolver.query(
-            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-            null,
-            null,
-            null,
-            null
-        )
-        while (cursor!!.moveToNext()) {
-            name =
-                cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME ))
-            phonenumber =
-                cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-            var contact = Contact()
-            contact.name = name
-            contact.number = phonenumber
-            listContacts.add(contact)
-        }
-        cursor!!.close()
-        adapter = ContactAdapter(listContacts)
-        recyclerView!!.adapter = adapter
+        listAllContacts = ArrayList<Contact>()
+//        cursor = contentResolver.query(
+//            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+//            null,
+//            null,
+//            null,
+//            null
+//        )
+//        while (cursor!!.moveToNext()) {
+//            name =
+//                cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME ))
+//            phonenumber =
+//                cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+//            var contact = Contact()
+//            contact.name = name
+//            contact.number = phonenumber
+//            listAllContacts.add(contact)
+//        }
+//        cursor!!.close()
+//        adapter = ContactAdapter(listAllContacts)
+//        recyclerView!!.adapter = adapter
+
+        var contact1 = Contact()
+        contact1.name = "Senthil"
+        contact1.number = "9878787878"
+        listAllContacts.add(contact1)
+
+        var contact2 = Contact()
+        contact2.name = "Dhayalu"
+        contact2.number = "9878787878"
+        listAllContacts.add(contact2)
+
+        var contact3 = Contact()
+        contact3.name = "Gowtham"
+        contact3.number = "9878787878"
+        listAllContacts.add(contact3)
+
+        return listAllContacts
     }
+
+    fun getSingleContactList() : ArrayList<Contact> {
+
+        listContact = ArrayList<Contact>()
+//        cursor = contentResolver.query(
+//            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+//            null,
+//            null,
+//            null,
+//            null
+//        )
+//        while (cursor!!.moveToNext()) {
+//            name =
+//                cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME ))
+//            phonenumber =
+//                cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+//            var contact = Contact()
+//
+//            if (phonenumber.toString().contains("8869")) {
+//                contact.name = name
+//                contact.number = phonenumber
+//                listContact.add(contact)
+//            }
+//        }
+//        cursor!!.close()
+//        adapter = ContactAdapter(listContact)
+//        recyclerView!!.adapter = adapter
+
+
+          var contact1 = Contact()
+          contact1.name = "Senthil"
+          contact1.number = "9878787878"
+          listContact.add(contact1)
+//        for (contact in listContact) {
+//
+//            Log.d("Single Contact", "Name :" + contact.name)
+//            Log.d("Single Contact", "Number :" + contact.number)
+//
+//        }
+
+        return listContact
+    }
+
+
 
     // callback methods
 
@@ -113,7 +176,7 @@ class MainActivity : AppCompatActivity() {
                 var editor = sharedPreferences!!.edit()
                 editor.putBoolean("allowed", true)
                 editor.commit()
-                getContactList()
+                getAllContactsList()
             } else {
                 Toast.makeText(
                     this,

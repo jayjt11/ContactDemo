@@ -11,4 +11,6 @@ package com.expleo.contactdemo.model
 class Contact() {
     var name: String? = null
     var number: String? = null
+    var email: String? = null
+
 }
