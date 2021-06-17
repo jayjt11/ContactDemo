@@ -7,11 +7,11 @@ import java.util.regex.Pattern
 
 class ContactValidator {
 
-    fun validateSingleContactList(arrayContact: ArrayList<Contact>) : Boolean {
-        return (arrayContact.size == 1)
+    fun validateContact(contact: Contact) : Boolean {
+        return (contact != null)
     }
     fun validateAllContactLists(arrayContact: ArrayList<Contact>) : Boolean {
-        return (arrayContact.size > 0)
+        return (arrayContact.size > 0 && arrayContact != null)
     }
 
     fun validateMobileNumber(number : String) : Boolean {

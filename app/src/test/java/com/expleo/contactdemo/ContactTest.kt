@@ -9,16 +9,15 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class ContactTest {
 
-    private fun getSingleContact() : ArrayList<Contact> {
+    private fun getSingleContact() : Contact {
 
-        var contact  = Contact()
-        var contactList = ArrayList<Contact>()
-        contact.name = "Jayant Tiwari"
-        contact.number = "+19867608869"
-        contact.email = "jayjt1@yahoo.in"
+        var contact : Contact? = null
+//        contact.name = "Jayant Tiwari"
+//        contact.number = "+19867608869"
+//        contact.email = "jayjt1@yahoo.in"
 
-        contactList.add(contact)
-        return contactList
+      //  contactList.add(contact)
+        return contact!!
     }
 
     private fun getAllContact() : ArrayList<Contact> {
@@ -47,18 +46,19 @@ class ContactTest {
         var contactList = getSingleContact()
 
         var contactValidator = ContactValidator()
-        var validateSize = contactValidator.validateSingleContactList(contactList)
+        var validateContact = contactValidator.validateContact(contactList)
 
-        var mobileNumber = contactList[0].number!!
+        var mobileNumber = contactList.number!!
         var validateMobile = contactValidator.validateMobileNumber(mobileNumber)
 
-        var name = contactList[0].name!!
+        var name = contactList.name!!
         var validateName = contactValidator.validateName(name)
 
-        var email = contactList[0].email!!
+        var email = contactList.email!!
         var validateEmail = contactValidator.validateEmail(email)
 
-        assertEquals(validateSize, true)
+       // assertEquals(validateSize, true)
+        assertNotNull(validateContact)
         assertEquals(validateMobile, true)
         assertEquals(validateName, true)
         assertEquals(validateEmail, true)
